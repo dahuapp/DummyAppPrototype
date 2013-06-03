@@ -1,5 +1,6 @@
 package io.dahuapp.editor.gui;
 
+import java.io.File;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.scene.Scene;
@@ -8,6 +9,8 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 public class DummyAppPrototype extends Application {
+    
+    private static File projectDir;
 
     @Override
     public void start(Stage primaryStage) {
