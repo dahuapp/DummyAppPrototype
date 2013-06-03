@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import netscape.javascript.JSObject;
 
 public class DummyAppPrototype extends Application {
     
@@ -16,7 +17,9 @@ public class DummyAppPrototype extends Application {
     public void start(Stage primaryStage) {
         WebView wv = new WebView();
         wv.getEngine().load(getClass().getResource("dahuapp.html").toString());
-
+        JSObject window = (JSObject)wv.getEngine().executeScript("window");
+        window.setMember("driver", new DummyAppPrototype());
+        
         StackPane root = new StackPane();
         root.getChildren().add(wv);
 
@@ -37,5 +40,9 @@ public class DummyAppPrototype extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+    }
+    
+    public void bob() {
+        System.out.println("bob");
     }
 }
