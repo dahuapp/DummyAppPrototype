@@ -30,7 +30,7 @@ public class DriverKeyboard {
                 switch (e.getKeyCode()) {
 
                     case NativeKeyEvent.VK_F8:
-                        DriverScreen.takeScreen();
+                        ScreenDriver.takeScreen();
                         break;
 
                     case NativeKeyEvent.VK_ESCAPE:
