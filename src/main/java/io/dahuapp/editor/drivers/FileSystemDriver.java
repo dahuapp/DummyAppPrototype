@@ -33,17 +33,15 @@ public class FileSystemDriver {
         return dir.mkdir();
     }
 
-    /*
-     * writes the new screen "image" in the project directory
-     * false if image can't be written
-     * projectDir is the directory of the project, where images and JSon are
-     * stored
+    /**
+     * Writes the new screen image in the project directory.
+     * @param image The image to write.
+     * @param projectDir The project directory (name).
+     * @return The name of the image created (or null if fail).
      */
-    public static boolean writeImage(BufferedImage image, String projectDir)
-            throws IOException {
+    public static String writeImage(BufferedImage image, String projectDir) {
         try {
             File dirFile = new File(projectDir);
-            int count = 0;
 
             FilenameFilter png = new FilenameFilter() {
                 @Override
@@ -52,12 +50,19 @@ public class FileSystemDriver {
                 }
             };
 
-            count = dirFile.listFiles(png).length + 1;
-
-            return ImageIO.write(image, "png", new File(projectDir + "/screen" + count +".png"));
-
+            final int count = dirFile.listFiles(png).length + 1;
+            
+            // returns the file separator for this platform (unix or windows eg)
+            final String fileSep = System.getProperty("file.separator");
+            final String fileName = "screen" + count + ".png";
+            final File imageFile = new File(projectDir + fileSep + fileName);
+            if (ImageIO.write(image, "png", imageFile)) {
+                return fileSep;
+            } else {
+                return null;
+            }
         } catch (IOException e) {
-            return false;
+            return null;
         }
     }
 }

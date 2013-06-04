@@ -1,27 +1,25 @@
 package io.dahuapp.editor.app;
 
-import java.util.HashMap;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
-import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-import netscape.javascript.JSException;
 import netscape.javascript.JSObject;
-
 import io.dahuapp.editor.drivers.Driver;
-import io.dahuapp.editor.drivers.DummyDriver;
+import io.dahuapp.editor.drivers.KeyboardDriver;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
 import javafx.concurrent.Worker.State;
 
+import io.dahuapp.editor.app.proxy.DahuAppProxy;
+import java.util.HashMap;
+
 public class DahuApp extends Application {
 
     private WebView webview;
-    private DahuAppJS dahuappJS;
     
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -60,19 +58,14 @@ public class DahuApp extends Application {
         // load main app
         webview.getEngine().load(getClass().getResource("dahuapp.html").toExternalForm());
 
+
         // extend the webview js context
         webview.getEngine().getLoadWorker().stateProperty().addListener(new ChangeListener<Worker.State>() {
             @Override
             public void changed(final ObservableValue<? extends Worker.State> observableValue, final State oldState, final State newState) {
                 if (newState == State.SUCCEEDED) {
                     JSObject win = (JSObject) webview.getEngine().executeScript("window");
-                    dahuappJS = new DahuAppJS();
-                    win.setMember("dahuapp", dahuappJS);
-                    
-                    // Java side test
-                    dahuappJS.printHello("petter");
-                    webview.getEngine().executeScript("dahuapp.printHello('mary')");
-                    webview.getEngine().executeScript("window.dahuapp.printHello('mary2')");
+                    win.setMember("dahuapp", new DahuAppProxy());
                 }
             }
         });
@@ -82,26 +75,23 @@ public class DahuApp extends Application {
      * DahuApp JavaScript interface to DahuApp main application
      */
     public class DahuAppJS {
-        HashMap<String, Driver> drivers = new HashMap<String, Driver>();
+        
+        HashMap<String, Driver> drivers = new HashMap<>();
         
         public DahuAppJS() {
-            drivers.put("dummy", new DummyDriver());
+            drivers.put("keyboard", new KeyboardDriver());
         }
         
         public String sayHello(String name) {
-            return "Hello "+name;
+            return "Hello " + name;
         }
         
         public void printHello(String name) {
             System.out.println(sayHello(name));
         }
         
-        public void exit() {
-            Platform.exit();
-        }
-        
-        public DummyDriver dummy() {
-            return (DummyDriver) drivers.get("dummy");
+        public KeyboardDriver keyboard() {
+            return (KeyboardDriver) drivers.get("keyboard");
         }
     }
 }
