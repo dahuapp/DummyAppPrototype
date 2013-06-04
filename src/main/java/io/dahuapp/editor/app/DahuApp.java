@@ -1,6 +1,5 @@
 package io.dahuapp.editor.app;
 
-import io.dahuapp.editor.gui.DummyAppPrototype;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.application.Platform;
