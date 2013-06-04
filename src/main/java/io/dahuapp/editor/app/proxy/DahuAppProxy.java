@@ -14,6 +14,7 @@ public class DahuAppProxy implements Proxy {
         drivers = new DahuAppDriverProxy();
     }
     
+    @Override
     public void onLoad() {
         drivers.onLoad();
     }
@@ -30,7 +31,8 @@ public class DahuAppProxy implements Proxy {
         Platform.exit();
     }
     
+    @Override
     public void onStop() {
-        // ignore
+        drivers.onStop();
     }
 }

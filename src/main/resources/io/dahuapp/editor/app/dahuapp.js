@@ -16,7 +16,7 @@
     
     $('#capture-mode').click(function() {
         if (!captureMode) {
-            dahuapp.keyboard().listenKeyboard();
+            dahuapp.drivers.keyboard.listenKeyboard();
             captureMode = true;
         }
     });

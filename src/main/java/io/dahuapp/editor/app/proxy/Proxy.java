@@ -1,6 +1,5 @@
 package io.dahuapp.editor.app.proxy;
 
-
 /**
  *
  * @author barraq
