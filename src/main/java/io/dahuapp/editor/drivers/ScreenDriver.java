@@ -16,6 +16,8 @@ public class ScreenDriver {
     
 // on retourne l'image ? 
     public static BufferedImage takeScreen(){
+        
+        //@warning DONT INITIALIZE ALL THE TIME!!!!!! PUT IT IN CONSTRUCTOR
     
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice[] gs = ge.getScreenDevices();
@@ -29,6 +31,9 @@ public class ScreenDriver {
         }
         DisplayMode mode = gs[0].getDisplayMode();
         Rectangle bounds = new Rectangle(0, 0, mode.getWidth(), mode.getHeight());
+        
+        // END @warning
+        
         return robot.createScreenCapture(bounds);
     }
     

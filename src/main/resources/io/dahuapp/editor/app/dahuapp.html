@@ -4,6 +4,9 @@
         <meta charset="utf-8">
         <title>DahuApp</title>
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+        <script type="text/javascript">
+            
+        </script>
     </head>
 
     <body>
@@ -52,11 +55,15 @@
                     log("dahuapp exist");
                 } else {
                     log("dahuapp does not exist");
-                    logObj(window);
                 }    
                         
-                document.getElementById("out").innerHTML += "</br>"+dahuapp.sayHello("bob");
+                // say and print hello
+                log(dahuapp.sayHello("bob"));
                 dahuapp.printHello("bob");
+                
+                // access dummy driver
+                log(dahuapp.name);
+                log(dahuapp.drivers.dummy.onLoad());
             }
         </script>
     </body>
