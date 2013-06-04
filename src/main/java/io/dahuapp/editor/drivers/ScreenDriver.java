@@ -6,16 +6,18 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import javafx.scene.image.ImageView;
 
 /**
- *
+ * Driver to take a screenshot with AWT.
  * @author jeremy
  */
-public class ScreenDriver {
+public class ScreenDriver implements Driver {
     
-// on retourne l'image ? 
-    public static BufferedImage takeScreen(){
+    /**
+     * Take a screenshot and returns the image taken.
+     * @return The screenshot (full screen) image.
+     */
+    public BufferedImage takeScreen() {
     
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice[] gs = ge.getScreenDevices();
@@ -32,5 +34,13 @@ public class ScreenDriver {
         return robot.createScreenCapture(bounds);
     }
     
+    @Override
+    public void onLoad() {
+        System.out.println(this.getClass() + " loaded.");
+    }
     
+    @Override
+    public void onStop() {
+        System.out.println(this.getClass() + " stopped.");
+    }
 }

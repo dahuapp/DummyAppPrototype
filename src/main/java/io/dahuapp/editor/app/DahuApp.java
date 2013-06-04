@@ -3,16 +3,14 @@ package io.dahuapp.editor.app;
 import java.util.HashMap;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
-import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-import netscape.javascript.JSException;
 import netscape.javascript.JSObject;
 
 import io.dahuapp.editor.drivers.Driver;
-import io.dahuapp.editor.drivers.DummyDriver;
+import io.dahuapp.editor.drivers.KeyboardDriver;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
@@ -82,26 +80,23 @@ public class DahuApp extends Application {
      * DahuApp JavaScript interface to DahuApp main application
      */
     public class DahuAppJS {
-        HashMap<String, Driver> drivers = new HashMap<String, Driver>();
+        
+        HashMap<String, Driver> drivers = new HashMap<>();
         
         public DahuAppJS() {
-            drivers.put("dummy", new DummyDriver());
+            drivers.put("keyboard", new KeyboardDriver());
         }
         
         public String sayHello(String name) {
-            return "Hello "+name;
+            return "Hello " + name;
         }
         
         public void printHello(String name) {
             System.out.println(sayHello(name));
         }
         
-        public void exit() {
-            Platform.exit();
-        }
-        
-        public DummyDriver dummy() {
-            return (DummyDriver) drivers.get("dummy");
+        public KeyboardDriver keyboard() {
+            return (KeyboardDriver) drivers.get("keyboard");
         }
     }
 }
