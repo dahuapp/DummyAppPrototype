@@ -1,6 +1,7 @@
 *.class
 
 .gradle
+debug.keyStore
 
 # Package Files #
 *.jar
