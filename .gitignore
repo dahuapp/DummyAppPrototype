@@ -1,9 +1,3 @@
-*.class
-
 .gradle
-
-# Package Files #
-*.jar
-*.war
-*.ear
-/build/
+.nb-gradle-properties
+build
