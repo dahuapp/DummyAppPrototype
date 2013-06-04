@@ -60,6 +60,7 @@ public class DahuApp extends Application {
         // load main app
         webview.getEngine().load(getClass().getResource("dahuapp.html").toExternalForm());
 
+
         // extend the webview js context
         webview.getEngine().getLoadWorker().stateProperty().addListener(new ChangeListener<Worker.State>() {
             @Override
