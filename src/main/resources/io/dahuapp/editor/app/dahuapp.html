@@ -18,10 +18,18 @@
                 Mode capture
             </button>
         </header>
+        <div id="out">
+            some text
+        </div>
 
         <!-- Scripts for bootstrap -->
         
         <script src="http://code.jquery.com/jquery.min.js"></script>
         <script src="bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+            document.getElementById("out").innerHTML += "</br>"+"test";
+            document.getElementById("out").innerHTML += "</br>"+dahuapp.sayHello("bob");
+            dahuapp.printHello("bob");
+        </script>
     </body>
 </html>
