@@ -37,6 +37,7 @@ public class KeyboardDriver implements Driver {
                 switch (nke.getKeyCode()) {
                     
                     case NativeKeyEvent.VK_F8:
+                        
                         new ScreenDriver().takeScreen();
                         break;
 

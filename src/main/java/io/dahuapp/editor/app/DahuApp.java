@@ -70,28 +70,4 @@ public class DahuApp extends Application {
             }
         });
     }
-    
-    /**
-     * DahuApp JavaScript interface to DahuApp main application
-     */
-    public class DahuAppJS {
-        
-        HashMap<String, Driver> drivers = new HashMap<>();
-        
-        public DahuAppJS() {
-            drivers.put("keyboard", new KeyboardDriver());
-        }
-        
-        public String sayHello(String name) {
-            return "Hello " + name;
-        }
-        
-        public void printHello(String name) {
-            System.out.println(sayHello(name));
-        }
-        
-        public KeyboardDriver keyboard() {
-            return (KeyboardDriver) drivers.get("keyboard");
-        }
-    }
 }
