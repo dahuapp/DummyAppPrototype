@@ -7,15 +7,12 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import netscape.javascript.JSObject;
-import io.dahuapp.editor.drivers.Driver;
-import io.dahuapp.editor.drivers.KeyboardDriver;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
 import javafx.concurrent.Worker.State;
 
 import io.dahuapp.editor.app.proxy.DahuAppProxy;
-import java.util.HashMap;
 
 public class DahuApp extends Application {
 
@@ -57,7 +54,6 @@ public class DahuApp extends Application {
         
         // load main app
         webview.getEngine().load(getClass().getResource("dahuapp.html").toExternalForm());
-
 
         // extend the webview js context
         webview.getEngine().getLoadWorker().stateProperty().addListener(new ChangeListener<Worker.State>() {
