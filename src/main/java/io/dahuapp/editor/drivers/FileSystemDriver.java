@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import javafx.stage.DirectoryChooser;
 import javax.imageio.ImageIO;
 
 /**
@@ -16,10 +17,15 @@ import javax.imageio.ImageIO;
  */
 public class FileSystemDriver implements Driver{
     
+        private File file;
+        private DirectoryChooser directoryChooser = new DirectoryChooser();
+
+    
+    
     /*
      returns 1 if dir created
      */
-    public static boolean createDir(String name) {
+    public boolean createDir(String name) {
         File dir = new File(name);
         return dir.mkdir();
     }
@@ -30,7 +36,7 @@ public class FileSystemDriver implements Driver{
      * @param projectDir The project directory (name).
      * @return The name of the image created (or null if fail).
      */
-    public static String writeImage(BufferedImage image, String projectDir) {
+    public String writeImage(BufferedImage image, String projectDir) {
         try {
             File dirFile = new File(projectDir);
 
@@ -55,6 +61,17 @@ public class FileSystemDriver implements Driver{
         } catch (IOException e) {
             return null;
         }
+    }
+    
+    /**
+     * Let the user choose the project directory.
+     * @return The path of the chosen directory.
+     */
+    public String getDir() {               
+        
+        this.file = directoryChooser.showDialog(null); 
+        
+        return file.getAbsolutePath() + "/";
     }
 
     @Override
