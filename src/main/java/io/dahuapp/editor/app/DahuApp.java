@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import netscape.javascript.JSException;
 import netscape.javascript.JSObject;
 
 
@@ -53,7 +54,7 @@ public class DahuApp extends Application {
         // get main window JSObject and add our oun object
         windowJSObject = (JSObject) webview.getEngine().executeScript("window");
         windowJSObject.setMember("dahuapp", new DahuAppJS());
-        dahuappJSObject = (JSObject) webview.getEngine().executeScript("dahuapp");
+        //dahuappJSObject = (JSObject) webview.getEngine().executeScript("dahuapp");
         
         // driver should be added to dahuapp
         // window.dahuapp.driver.keyboard.doSomeThing(...)
