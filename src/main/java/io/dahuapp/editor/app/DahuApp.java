@@ -53,7 +53,7 @@ public class DahuApp extends Application {
     
     private void initDahuApp() {
         webview = new WebView();
-        webview.getEngine().load(getClass().getResource("/io/dahuapp/editor/gui/dahuapp.html").toExternalForm());
+        webview.getEngine().load(getClass().getResource("dahuapp.html").toExternalForm());
 
         // get main window JSObject and add our oun object
         windowJSObject = (JSObject) webview.getEngine().executeScript("window");
