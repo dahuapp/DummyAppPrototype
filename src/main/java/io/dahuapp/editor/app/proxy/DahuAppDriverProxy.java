@@ -10,15 +10,22 @@ public class DahuAppDriverProxy implements Proxy {
     
     public DummyDriver dummy;
     public KeyboardDriver keyboard;
+    public FileSystemDriver fileSystem;
+    public ScreenDriver screen;
     
     public DahuAppDriverProxy() {
         // init all drivers
         dummy = new DummyDriver();
         keyboard = new KeyboardDriver();
+        fileSystem = new FileSystemDriver();
+        screen = new ScreenDriver();
         
         // load all drivers
         dummy.onLoad();
         keyboard.onLoad();
+        fileSystem.onLoad();
+        screen.onLoad();
+        
     }
     
     @Override
