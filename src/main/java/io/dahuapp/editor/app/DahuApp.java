@@ -45,6 +45,11 @@ public class DahuApp extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        /* fix for osx */
+        System.setProperty("javafx.macosx.embedded", "true");
+        java.awt.Toolkit.getDefaultToolkit();
+        
+        /* launch app */
         launch(args);
     }
     
