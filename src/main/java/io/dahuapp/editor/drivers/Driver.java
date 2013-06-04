@@ -1,20 +1,19 @@
 package io.dahuapp.editor.drivers;
 
 /**
- * Driver interface.
+ * Common interface for drivers.
+ * 
  * @author barraq
  */
 public interface Driver {
     
     /**
-     * Loads the driver (must be called before any operations
-     * with this driver).
+     * Called when driver is loaded.
      */
     public void onLoad();
     
     /**
-     * Unloads the driver (must be called when the driver is not
-     * used anymore).
+     * Called when driver is stopped.
      */
     public void onStop();
 }
