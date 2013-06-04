@@ -50,6 +50,6 @@ dependencies {
 }
 
 javafx {
-    mainClass = 'io.dahuapp.editor.gui.DummyAppPrototype'
+    mainClass = 'io.dahuapp.editor.app.DahuApp'
 }
 
