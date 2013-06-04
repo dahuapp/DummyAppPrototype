@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import netscape.javascript.JSException;
 import netscape.javascript.JSObject;
 
 import io.dahuapp.editor.drivers.Driver;
@@ -57,10 +58,8 @@ public class DahuApp extends Application {
         // get main window JSObject and add our oun object
         windowJSObject = (JSObject) webview.getEngine().executeScript("window");
         dahuappJS = new DahuAppJS();
-        windowJSObject.setMember("dahuapp", dahuappJS);
-        
-        dahuappJS.printHello("petter");
-        
+        windowJSObject.setMember("dahuapp", dahuappJS);        
+        dahuappJS.printHello("petter");        
     }
     
     /**
