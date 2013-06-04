@@ -14,17 +14,8 @@ import javax.imageio.ImageIO;
  *
  * @author jeremy
  */
-public class FileSystemDriver {
+public class FileSystemDriver implements Driver{
     
-    /*
-     * TODO : onload and onstop methods
-     */
-
-    
-    
-    
-    
-
     /*
      returns 1 if dir created
      */
@@ -64,5 +55,13 @@ public class FileSystemDriver {
         } catch (IOException e) {
             return null;
         }
+    }
+
+    @Override
+    public void onLoad() {
+    }
+    
+    @Override
+    public void onStop() {
     }
 }
