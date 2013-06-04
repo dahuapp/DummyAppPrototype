@@ -13,12 +13,14 @@ import netscape.javascript.JSObject;
 
 import io.dahuapp.editor.drivers.Driver;
 import io.dahuapp.editor.drivers.DummyDriver;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Worker;
+import javafx.concurrent.Worker.State;
 
 public class DahuApp extends Application {
 
     private WebView webview;
-    private JSObject windowJSObject;
-    private JSObject dahuappJSObject;
     private DahuAppJS dahuappJS;
     
     @Override
@@ -52,14 +54,28 @@ public class DahuApp extends Application {
     }
     
     private void initDahuApp() {
+        // create webview
         webview = new WebView();
-        webview.getEngine().load(getClass().getResource("/io/dahuapp/editor/gui/dahuapp.html").toExternalForm());
+        
+        // load main app
+        webview.getEngine().load(getClass().getResource("dahuapp.html").toExternalForm());
 
-        // get main window JSObject and add our oun object
-        windowJSObject = (JSObject) webview.getEngine().executeScript("window");
-        dahuappJS = new DahuAppJS();
-        windowJSObject.setMember("dahuapp", dahuappJS);        
-        dahuappJS.printHello("petter");        
+        // extend the webview js context
+        webview.getEngine().getLoadWorker().stateProperty().addListener(new ChangeListener<Worker.State>() {
+            @Override
+            public void changed(final ObservableValue<? extends Worker.State> observableValue, final State oldState, final State newState) {
+                if (newState == State.SUCCEEDED) {
+                    JSObject win = (JSObject) webview.getEngine().executeScript("window");
+                    dahuappJS = new DahuAppJS();
+                    win.setMember("dahuapp", dahuappJS);
+                    
+                    // Java side test
+                    dahuappJS.printHello("petter");
+                    webview.getEngine().executeScript("dahuapp.printHello('mary')");
+                    webview.getEngine().executeScript("window.dahuapp.printHello('mary2')");
+                }
+            }
+        });
     }
     
     /**
