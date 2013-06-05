@@ -1,5 +1,6 @@
 package io.dahuapp.editor.drivers;
 
+import javafx.application.Platform;
 import netscape.javascript.JSObject;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
@@ -44,7 +45,12 @@ public class KeyboardDriver implements Driver {
                 if (listener != null) {
                     switch (nke.getKeyCode()) {
                         case NativeKeyEvent.VK_F8:
-                            listener.call("notify", "capture");
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    listener.call("notify", "capture");
+                                }
+                            });
                             break;
                         case NativeKeyEvent.VK_ESCAPE:
                             listener.call("notify", "escape");
