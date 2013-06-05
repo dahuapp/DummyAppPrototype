@@ -9,6 +9,25 @@ jQuery(function($) {
      * @type Boolean
      */
     var captureMode = false;
+    
+    /************************
+     * Notifiers for keyboard drivers
+     ************************/
+    
+    var captureNotify = {
+        "notify" : function(type) {
+            dahuapp.drivers.dummy.onLoad();
+            // tripe egal pour comparer des string en javascript
+            if (type === "capture") {
+                dahuapp.drivers.fileSystem.writeImage(
+                        dahuapp.drivers.screen.takeScreen(),
+                        ".");
+            } else if (type === "escape") {
+                captureMode = false;
+                dahuapp.drivers.keyboard.removeKeyListener();
+            }
+        }
+    };
 
     /************************
      * Set actions to buttons

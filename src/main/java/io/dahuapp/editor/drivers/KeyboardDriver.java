@@ -44,9 +44,11 @@ public class KeyboardDriver implements Driver {
                 if (listener != null) {
                     switch (nke.getKeyCode()) {
                         case NativeKeyEvent.VK_F8:
+                            System.out.println("je suis la");
                             listener.call("notify", "capture");
                             break;
                         case NativeKeyEvent.VK_ESCAPE:
+                            System.out.println("je suis ici");
                             listener.call("notify", "escape");
                             break;
                     }
