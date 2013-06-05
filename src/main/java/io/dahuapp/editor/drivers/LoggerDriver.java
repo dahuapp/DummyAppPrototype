@@ -18,6 +18,7 @@ public class LoggerDriver implements Driver {
     
     private static final Logger logger = Logger.getLogger(LoggerDriver.class.getName());
     private FileHandler fh;
+    private static final String file = "dahu";
     
     /**
      * @constructor LoggerDriver
@@ -31,7 +32,7 @@ public class LoggerDriver implements Driver {
     logger.setLevel(Level.ALL); //to throw messages from all levels
     logger.setUseParentHandlers(false); //to supress the default console
         try {
-            fh = new FileHandler("%t/dahu%u.log.html");
+            fh = new FileHandler("%t/" + file + "%u.log.html");
             fh.setFormatter(new HTMLFormatter());
             logger.addHandler(fh);
         } catch (IOException | SecurityException ex) {
@@ -50,7 +51,7 @@ public class LoggerDriver implements Driver {
     logger.setLevel(Level.ALL); //to throw messages from all levels
     logger.setUseParentHandlers(false); //to supress the default console
         try {
-            fh = new FileHandler(directory + "/dahu%u.log.html");
+            fh = new FileHandler(directory + "/" + file + "%u.log.html");
             fh.setFormatter(new HTMLFormatter());
             logger.addHandler(fh);
         } catch (IOException | SecurityException ex) {
@@ -187,10 +188,11 @@ public class LoggerDriver implements Driver {
     }
     
     /**
-     * @method setLogLevel
-     * @param level 
-     * @brief changes the level (default is Level.ALL)
+     * changes the level (default is Level.ALL)
      * The level value Level.OFF can be used to turn off logging.
+     * Here is the level's hierarchy :
+     * OFF < SEVERE < WARNING < INFO < CONFIG < 
+     * @param level
      * @see java.util.logging.Logger
      */
     public void setLogLevel(Level level) {
@@ -199,12 +201,12 @@ public class LoggerDriver implements Driver {
 
     @Override
     public void onLoad() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        log("Beginning...");
     }
 
     @Override
     public void onStop() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        log("End...");
     }
     
 }
