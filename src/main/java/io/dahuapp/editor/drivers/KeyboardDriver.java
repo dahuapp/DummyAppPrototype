@@ -1,6 +1,8 @@
 package io.dahuapp.editor.drivers;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import netscape.javascript.JSObject;
 import org.jnativehook.GlobalScreen;
@@ -34,8 +36,7 @@ public class KeyboardDriver implements Driver {
         try {
             GlobalScreen.registerNativeHook();
         } catch (NativeHookException ex) {
-            System.err.println("There was a problem registering the native hook.");
-            System.err.println(ex.getMessage());
+            Logger.getLogger(KeyboardDriver.class.getName()).log(Level.SEVERE, "There was a problem registering the native hook. {0}", ex.getMessage());
             System.exit(1);
         }
         
@@ -79,6 +80,6 @@ public class KeyboardDriver implements Driver {
     @Override
     public void onStop() {
         GlobalScreen.unregisterNativeHook();
-        System.out.println(this.getClass() + " stopped.");
+        Logger.getLogger(KeyboardDriver.class.getName()).log(Level.INFO, "Stoping {0} driver", KeyboardDriver.class.getName());
     }
 }
