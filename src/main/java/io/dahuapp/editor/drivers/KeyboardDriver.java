@@ -2,6 +2,8 @@ package io.dahuapp.editor.drivers;
 
 import java.util.ArrayList;
 import javafx.application.Platform;
+import javafx.scene.web.WebEngine;
+import netscape.javascript.JSException;
 import netscape.javascript.JSObject;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
@@ -19,14 +21,35 @@ import org.jnativehook.keyboard.NativeKeyListener;
  */
 public class KeyboardDriver implements Driver {
     
-    private ArrayList<JSObject> listeners = new ArrayList<>();
+    private WebEngine webEngine;
+    private ArrayList<String> callbacks = new ArrayList<>();
     
-    public void addKeyListener(JSObject listener) {
-        listeners.add(listener);
+    public KeyboardDriver(WebEngine webEngine) {
+        this.webEngine = webEngine;
     }
     
-    public void removeKeyListener(JSObject listener) {
-        listeners.remove(listener);
+    public void addKeyCallback(JSObject listener) throws JSException {
+        final String functionName = listener.getMember("name").toString();
+        switch (functionName) {
+            case "undefined":
+                throw new JSException("Callback function cannot be anonymous.");
+            case "":
+                throw new JSException("Callback function cannot be anonymous.");
+            default:
+                callbacks.add(functionName);
+        }
+    }
+    
+    public void removeKeyCallback(JSObject listener) throws JSException {
+        final String functionName = listener.getMember("name").toString();
+        switch (functionName) {
+            case "undefined":
+                throw new JSException("Callback function cannot be anonymous.");
+            case "":
+                throw new JSException("Callback function cannot be anonymous.");
+            default:
+                callbacks.remove(functionName);
+        }
     }
     
     @Override
@@ -44,20 +67,28 @@ public class KeyboardDriver implements Driver {
             @Override
             public void nativeKeyReleased(NativeKeyEvent nke) {
                 switch (nke.getKeyCode()) {
+                    
                     case NativeKeyEvent.VK_F8:
-                        System.out.println("je suis la");
-                        for (JSObject l : listeners) {
-                            if (l != null) {
-                                l.call("notifyCapture");
-                            }
+                        for (final String callback : callbacks) {
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    JSObject window = (JSObject)webEngine.executeScript("window");
+                                    window.call(callback, "capture");
+                                }
+                            });
                         }
                         break;
+                        
                     case NativeKeyEvent.VK_ESCAPE:
-                        System.out.println("je suis ici");
-                        for (JSObject l : listeners) {
-                            if (l != null) {
-                                l.call("notifyEscape");
-                            }
+                        for (final String callback : callbacks) {
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    webEngine.executeScript(callback +
+                                            "(\"escape\")");
+                                }
+                            });
                         }
                         break;
                 }
