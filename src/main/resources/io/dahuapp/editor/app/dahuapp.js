@@ -12,12 +12,14 @@ jQuery(function($) {
     
     /************************
      * Notifiers for keyboard drivers
+     * 
+     * Put all the notifiers in the same 'notify'
      ************************/
     
     var captureNotify = {
-        "notify" : function(type) {
+        "notifyCapture" : function(type) {
             dahuapp.drivers.dummy.onLoad();
-            // tripe egal pour comparer des string en javascript
+            // === for strict comparison
             if (type === "capture") {
                 dahuapp.drivers.fileSystem.writeImage(
                         dahuapp.drivers.screen.takeScreen(),

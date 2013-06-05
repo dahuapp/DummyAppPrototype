@@ -1,5 +1,7 @@
 package io.dahuapp.editor.drivers;
 
+import java.util.ArrayList;
+import javafx.application.Platform;
 import netscape.javascript.JSObject;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
@@ -17,14 +19,14 @@ import org.jnativehook.keyboard.NativeKeyListener;
  */
 public class KeyboardDriver implements Driver {
     
-    private JSObject listener = null;
+    private ArrayList<JSObject> listeners = new ArrayList<>();
     
     public void addKeyListener(JSObject listener) {
-        this.listener = listener;
+        listeners.add(listener);
     }
     
-    public void removeKeyListener() {
-        this.listener = null;
+    public void removeKeyListener(JSObject listener) {
+        listeners.remove(listener);
     }
     
     @Override
@@ -41,17 +43,23 @@ public class KeyboardDriver implements Driver {
         GlobalScreen.getInstance().addNativeKeyListener(new NativeKeyListener() {
             @Override
             public void nativeKeyReleased(NativeKeyEvent nke) {
-                if (listener != null) {
-                    switch (nke.getKeyCode()) {
-                        case NativeKeyEvent.VK_F8:
-                            System.out.println("je suis la");
-                            listener.call("notify", "capture");
-                            break;
-                        case NativeKeyEvent.VK_ESCAPE:
-                            System.out.println("je suis ici");
-                            listener.call("notify", "escape");
-                            break;
-                    }
+                switch (nke.getKeyCode()) {
+                    case NativeKeyEvent.VK_F8:
+                        System.out.println("je suis la");
+                        for (JSObject l : listeners) {
+                            if (l != null) {
+                                l.call("notifyCapture");
+                            }
+                        }
+                        break;
+                    case NativeKeyEvent.VK_ESCAPE:
+                        System.out.println("je suis ici");
+                        for (JSObject l : listeners) {
+                            if (l != null) {
+                                l.call("notifyEscape");
+                            }
+                        }
+                        break;
                 }
             }
             
