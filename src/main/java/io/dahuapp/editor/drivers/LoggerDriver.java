@@ -191,7 +191,7 @@ public class LoggerDriver implements Driver {
      * changes the level (default is Level.ALL)
      * The level value Level.OFF can be used to turn off logging.
      * Here is the level's hierarchy :
-     * OFF < SEVERE < WARNING < INFO < CONFIG < 
+     * OFF < SEVERE < WARNING < INFO < CONFIG < FINE < ALL
      * @param level
      * @see java.util.logging.Logger
      */
