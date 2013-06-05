@@ -46,12 +46,12 @@ public class HTMLFormatter extends Formatter {
       s.append("</b></span></td></tr>\n");
       return s.toString();
    }
-   // début du fichier de log
+   // beginning of the log file
    @Override
    public String getHead(Handler h) {
       return "<html>\n<body>\n<table>\n";
    }
-   // fin du fichier de log
+   // end of the log file
    @Override
    public String getTail(Handler h) {
        return "</table>\n</body>\n</html>\n";

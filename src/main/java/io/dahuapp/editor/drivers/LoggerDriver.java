@@ -21,7 +21,7 @@ public class LoggerDriver implements Driver {
     
     /**
      * @constructor LoggerDriver
-     * @brief Constructs a LoggerDriver. The log file will be set
+     * Constructs a LoggerDriver. The log file will be set
      * in the temporary directory of the system
      * eg. C:/temp/dahu[nb].log on Windows system
      *   or /var/tmp/dahu[nb] on Solaris system....
@@ -41,9 +41,9 @@ public class LoggerDriver implements Driver {
     
     /**
      * @constructor LoggerDriver
-     * @param directory : the directory to place the log file
-     * @brief Constructs a LoggerDriver. The log file will be set
+     * Constructs a LoggerDriver. The log file will be set
      * in the directory passed on parameters
+     * @param directory : the directory to place the log file
      */
     public LoggerDriver(String directory) {
     // create a logger and a handler in html format
@@ -59,62 +59,56 @@ public class LoggerDriver implements Driver {
     }
     
     /**
-     * @method info
+     * log the message with an INFO level (color : cyan)
      * @param message : the message to log
-     * @brief log the message with an INFO level (color : cyan)
      */
     public static void info(String message) {
         logger.log(Level.INFO, message) ;
     }
     
     /**
-     * @method info
+     *  log the message with an INFO level (color : cyan)
      * @param sourceClass : name of class that issued the logging request
      * @param sourceMethod : name of method that issued the logging request
      * @param message : the message to log
-     * @brief log the message with an INFO level (color : cyan)
      */
     public static void info(String sourceClass, String sourceMethod, String message) {
         logger.logp(Level.INFO, sourceClass, sourceMethod, message);
     }
     
      /**
-     * @method severe
+     * log the message with a SEVERE level (color : red)
      * @param message : the message to log
-     * @brief log the message with a SEVERE level (color : red)
      */
     public static void severe(String message) {
         logger.log(Level.SEVERE, message);
     }
     
      /**
-     * @method severe
+     * log the message with a SEVERE level (color : red)
      * @param sourceClass : name of class that issued the logging request
      * @param sourceMethod : name of method that issued the logging request
      * @param message : the message to log
-     * @brief log the message with a SEVERE level (color : red)
      */
     public static void severe(String sourceClass, String sourceMethod, String message) {
         logger.logp(Level.SEVERE, sourceClass, sourceMethod, message);
     }
     
     /**
-     * @method severe
+     * log the message with a SEVERE level (color : red)
      * @param message : the message to log
      * @param cause  : the cause of the severity
-     * @brief log the message with a SEVERE level (color : red)
      */
     public static void severe(String message, Throwable cause) {
         logger.log(Level.SEVERE, message, cause);
     }
     
     /**
-     * @method severe
+     * log the message with a SEVERE level (color : red)
      * @param sourceClass : name of class that issued the logging request
      * @param sourceMethod : name of method that issued the logging request
      * @param message : the message to log
      * @param cause : the cause of the severity
-     * @brief log the message with a SEVERE level (color : red)
      */
     public static void severe(String sourceClass, String sourceMethod, String message, 
                         Throwable cause) {
@@ -122,79 +116,71 @@ public class LoggerDriver implements Driver {
     }
     
      /**
-     * @method warning
+     * log the message with a WARNING level (color : yellow)
      * @param message : the message to log
-     * @brief log the message with a WARNING level (color : yellow)
      */
     public static void warning(String message) {
         logger.log(Level.WARNING, message);
     }
     /**
-     * @method warning
+     * log the message with a WARNING level (color : yellow)
      * @param sourceClass : name of class that issued the logging request
      * @param sourceMethod : name of method that issued the logging request
      * @param message : the message to log
-     * @brief log the message with a WARNING level (color : yellow)
      */
     public static void warning(String sourceClass, String sourceMethod, String message) {
         logger.logp(Level.WARNING, sourceClass, sourceMethod, message);
     }
     
      /**
-     * @method fine
+     * log the message with a FINE level (color : blue)
      * @param message : the message to log
-     * @brief log the message with a FINE level (color : blue)
      */
     public static void fine(String message) {
         logger.log(Level.FINE, message);
     }
     
      /**
-     * @method fine
+     * log the message with a FINE level (color : blue)
      * @param sourceClass : name of class that issued the logging request
      * @param sourceMethod : name of method that issued the logging request
      * @param message : the message to log
-     * @brief log the message with a FINE level (color : blue)
      */
     public static void fine(String sourceClass, String sourceMethod, String message) {
         logger.logp(Level.FINE, sourceClass, sourceMethod, message);
     }
         
      /**
-     * @method config
+     * log the message with a CONFIG level (color : green)
      * @param message : the message to log
-     * @brief log the message with a CONFIG level (color : green)
      */
     public static void config(String message) {
         logger.log(Level.CONFIG, message);
     }
         
      /**
-     * @method config
+     * log the message with a CONFIG level (color : green)
      * @param sourceClass : name of class that issued the logging request
      * @param sourceMethod : name of method that issued the logging request
      * @param message : the message to log
-     * @brief log the message with a CONFIG level (color : green)
      */
     public static void config(String sourceClass, String sourceMethod, String message) {
         logger.logp(Level.CONFIG, sourceClass, sourceMethod, message);
     }
     
     /**
-     * @method log
+     * log the message with an ALL level (color : black)
      * @param message : the message to log
-     * @brief log the message with an ALL level (color : black)
      */
     public static void log(String message) {
         logger.log(Level.ALL, message);
     }
      
      /**
-     * @method log
+     * log the message with an ALL level (color : black)
      * @param sourceClass : name of class that issued the logging request
      * @param sourceMethod : name of method that issued the logging request
      * @param message : the message to log
-     * @brief log the message with an ALL level (color : black)
      */
     public static void log(String sourceClass, String sourceMethod, String message) {
         logger.logp(Level.ALL, sourceClass, sourceMethod, message);
