@@ -73,6 +73,27 @@ public class FileSystemDriver implements Driver{
         
         return file.getAbsolutePath() + "/";
     }
+    
+    public String[] getFiles(String projectDir) {
+        try {
+            File dirFile = new File(projectDir);
+
+            FilenameFilter png = new FilenameFilter() {
+                @Override
+                public boolean accept(File dir, String name) {
+                    return name.matches(".*\\.png$");
+                }
+            };
+            int nbFiles = dirFile.listFiles(png).length ;
+            String [] listFiles = new String[nbFiles];
+            for(int i = 0 ; i < nbFiles ; i++) {
+                listFiles[i] = dirFile.listFiles()[i].getPath();
+            }
+            return listFiles;
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
     @Override
     public void onLoad() {
