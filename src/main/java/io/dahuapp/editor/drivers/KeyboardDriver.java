@@ -1,5 +1,9 @@
 package io.dahuapp.editor.drivers;
 
+<<<<<<< HEAD
+import java.util.ArrayList;
+=======
+>>>>>>> 12772dcafd4de64ea45138613543d729e6ea38df
 import javafx.application.Platform;
 import netscape.javascript.JSObject;
 import org.jnativehook.GlobalScreen;
@@ -18,14 +22,14 @@ import org.jnativehook.keyboard.NativeKeyListener;
  */
 public class KeyboardDriver implements Driver {
     
-    private JSObject listener = null;
+    private ArrayList<JSObject> listeners = new ArrayList<>();
     
     public void addKeyListener(JSObject listener) {
-        this.listener = listener;
+        listeners.add(listener);
     }
     
-    public void removeKeyListener() {
-        this.listener = null;
+    public void removeKeyListener(JSObject listener) {
+        listeners.remove(listener);
     }
     
     @Override
@@ -42,20 +46,23 @@ public class KeyboardDriver implements Driver {
         GlobalScreen.getInstance().addNativeKeyListener(new NativeKeyListener() {
             @Override
             public void nativeKeyReleased(NativeKeyEvent nke) {
-                if (listener != null) {
-                    switch (nke.getKeyCode()) {
-                        case NativeKeyEvent.VK_F8:
-                            Platform.runLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    listener.call("notify", "capture");
-                                }
-                            });
-                            break;
-                        case NativeKeyEvent.VK_ESCAPE:
-                            listener.call("notify", "escape");
-                            break;
-                    }
+                switch (nke.getKeyCode()) {
+                    case NativeKeyEvent.VK_F8:
+                        System.out.println("je suis la");
+                        for (JSObject l : listeners) {
+                            if (l != null) {
+                                l.call("notifyCapture");
+                            }
+                        }
+                        break;
+                    case NativeKeyEvent.VK_ESCAPE:
+                        System.out.println("je suis ici");
+                        for (JSObject l : listeners) {
+                            if (l != null) {
+                                l.call("notifyEscape");
+                            }
+                        }
+                        break;
                 }
             }
             
