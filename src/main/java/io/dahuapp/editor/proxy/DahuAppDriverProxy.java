@@ -1,6 +1,7 @@
-package io.dahuapp.editor.app.proxy;
+package io.dahuapp.editor.proxy;
 
 import io.dahuapp.editor.drivers.*;
+import javafx.scene.web.WebEngine;
 
 /**
  *
@@ -13,10 +14,10 @@ public class DahuAppDriverProxy implements Proxy {
     public FileSystemDriver fileSystem;
     public ScreenDriver screen;
     
-    public DahuAppDriverProxy() {
+    public DahuAppDriverProxy(WebEngine webEngine) {
         // init all drivers
-        dummy = new DummyDriver();
-        keyboard = new KeyboardDriver();
+        dummy = new DummyDriver(webEngine);
+        keyboard = new KeyboardDriver(webEngine);
         fileSystem = new FileSystemDriver();
         screen = new ScreenDriver();
         

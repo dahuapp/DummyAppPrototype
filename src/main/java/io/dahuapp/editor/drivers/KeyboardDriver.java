@@ -1,7 +1,11 @@
 package io.dahuapp.editor.drivers;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.scene.web.WebEngine;
+import netscape.javascript.JSException;
 import netscape.javascript.JSObject;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
@@ -19,14 +23,41 @@ import org.jnativehook.keyboard.NativeKeyListener;
  */
 public class KeyboardDriver implements Driver {
     
-    private ArrayList<JSObject> listeners = new ArrayList<>();
+    private WebEngine webEngine;
+    private ArrayList<String> callbacks = new ArrayList<>();
     
-    public void addKeyListener(JSObject listener) {
-        listeners.add(listener);
+    /*
+     * @warning in the new architecture driver should not be aware of
+     * webengine! driver must have proxy!!!
+     */
+    public KeyboardDriver(WebEngine webEngine) {
+        this.webEngine = webEngine;
     }
     
-    public void removeKeyListener(JSObject listener) {
-        listeners.remove(listener);
+    public void addKeyCallback(JSObject listener) throws JSException {
+        System.out.println(listener);
+        final String functionName = listener.getMember("name").toString();
+        System.out.println(functionName);
+        switch (functionName) {
+            case "undefined":
+                throw new JSException("Callback function cannot be anonymous.");
+            case "":
+                throw new JSException("Callback function cannot be anonymous.");
+            default:
+                callbacks.add(functionName);
+        }
+    }
+    
+    public void removeKeyCallback(JSObject listener) throws JSException {
+        final String functionName = listener.getMember("name").toString();
+        switch (functionName) {
+            case "undefined":
+                throw new JSException("Callback function cannot be anonymous.");
+            case "":
+                throw new JSException("Callback function cannot be anonymous.");
+            default:
+                callbacks.remove(functionName);
+        }
     }
     
     @Override
@@ -34,8 +65,7 @@ public class KeyboardDriver implements Driver {
         try {
             GlobalScreen.registerNativeHook();
         } catch (NativeHookException ex) {
-            System.err.println("There was a problem registering the native hook.");
-            System.err.println(ex.getMessage());
+            Logger.getLogger(KeyboardDriver.class.getName()).log(Level.SEVERE, "There was a problem registering the native hook. {0}", ex.getMessage());
             System.exit(1);
         }
         
@@ -44,20 +74,32 @@ public class KeyboardDriver implements Driver {
             @Override
             public void nativeKeyReleased(NativeKeyEvent nke) {
                 switch (nke.getKeyCode()) {
+                    
                     case NativeKeyEvent.VK_F8:
-                        System.out.println("je suis la");
-                        for (JSObject l : listeners) {
-                            if (l != null) {
-                                l.call("notifyCapture");
-                            }
+                        for (final String callback : callbacks) {
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    JSObject editor = (JSObject)webEngine.executeScript("window.dahuapp.editor");
+                                    System.out.println("F8 is pressed");
+                                    editor.call(callback, "capture");
+                                }
+                            });
                         }
                         break;
+                        
                     case NativeKeyEvent.VK_ESCAPE:
-                        System.out.println("je suis ici");
-                        for (JSObject l : listeners) {
-                            if (l != null) {
-                                l.call("notifyEscape");
-                            }
+                        for (final String callback : callbacks) {
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // escape will throw an exception of ClassCast but due to
+                                    // the fact it's undefined (see console println)
+                                    System.out.println("ESC is pressed");
+                                    JSObject editor = (JSObject)webEngine.executeScript("window.dahuapp.editor");
+                                    editor.call(callback, "escape");
+                                }
+                            });
                         }
                         break;
                 }
@@ -73,12 +115,12 @@ public class KeyboardDriver implements Driver {
                 // nothing to do
             }
         });
-        System.out.println(this.getClass() + " loaded.");
+        Logger.getLogger(KeyboardDriver.class.getName()).log(Level.INFO, "Starting {0} driver", KeyboardDriver.class.getName());
     }
 
     @Override
     public void onStop() {
         GlobalScreen.unregisterNativeHook();
-        System.out.println(this.getClass() + " stopped.");
+        Logger.getLogger(KeyboardDriver.class.getName()).log(Level.INFO, "Stopping {0} driver", KeyboardDriver.class.getName());
     }
 }

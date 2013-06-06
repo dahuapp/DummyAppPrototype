@@ -4,14 +4,16 @@
         <meta charset="utf-8">
         <title>DahuApp</title>
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-        <script type="text/javascript">
-            
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+        <script>
+            window.log = function(message) {
+                document.getElementById("out").innerHTML += "</br>"+message;
+            }
         </script>
+        <script src="http://code.jquery.com/jquery.min.js"></script> <!-- @warning JQuery must be local -->
     </head>
-
     <body>
         <!-- Application -->
-
         <header>
             <button type="button" id="set-project-dir" class="btn btn-primary">
                 Répertoire du projet
@@ -25,17 +27,7 @@
             <a href="#" onclick="test()">click</a>
             some text
         </div>
-
-        <!-- Scripts -->
-        
-        <script src="http://code.jquery.com/jquery.min.js"></script>
-        <script src="bootstrap/js/bootstrap.min.js"></script>
-        <script src="dahuapp.js"></script>
         <script type="text/javascript">
-            log = function(message) {
-                document.getElementById("out").innerHTML += "</br>"+message;
-            }
-            
             logObj = function(o) {
                 var str='';
                 for(var p in o){
@@ -46,7 +38,7 @@
                     }
                 }
 
-                return str;
+                log(str);
             }
             
             test = function() {
@@ -56,14 +48,13 @@
                     log("dahuapp does not exist");
                 }    
                         
-                // say and print hello
-                log(dahuapp.sayHello("bob"));
-                dahuapp.printHello("bob");
-                
-                // access dummy driver
-                log(dahuapp.name);
-                log(dahuapp.drivers.dummy.onLoad());
+                // say and print hello from different module
+                log(dahuapp.somePublicFunction("petter"));
+                log(dahuapp.editor.somePublicFunction("martine"));
+                log(dahuapp.drivers.dummy.getHello("hello!!!!!!!!"));
             }
         </script>
+        <script src="dahuapp.js"></script>
+        <script src="dahuapp.editor.js"></script>
     </body>
 </html>
