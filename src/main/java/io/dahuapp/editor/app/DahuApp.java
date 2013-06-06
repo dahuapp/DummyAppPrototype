@@ -12,7 +12,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
 import javafx.concurrent.Worker.State;
 
-import io.dahuapp.editor.proxy.DahuAppProxy;
+import io.dahuapp.editor.proxy.DahuAppDriverProxy;
 
 public class DahuApp extends Application {
 
@@ -65,8 +65,12 @@ public class DahuApp extends Application {
             @Override
             public void changed(final ObservableValue<? extends Worker.State> observableValue, final State oldState, final State newState) {
                 if (newState == State.SUCCEEDED) {
-                    JSObject win = (JSObject) webview.getEngine().executeScript("window");
-                    win.setMember("dahuapp", new DahuAppProxy(webview.getEngine()));
+                    // load drivers
+                    JSObject dahuapp = (JSObject) webview.getEngine().executeScript("dahuapp");
+                    dahuapp.setMember("drivers", new DahuAppDriverProxy(webview.getEngine()));
+                    
+                    // init engine
+                    webview.getEngine().executeScript("dahuapp.editor.init();");
                 }
             }
         });

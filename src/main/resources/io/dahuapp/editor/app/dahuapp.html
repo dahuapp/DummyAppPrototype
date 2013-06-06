@@ -4,9 +4,10 @@
         <meta charset="utf-8">
         <title>DahuApp</title>
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-        <script type="text/javascript">
-            
-        </script>
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+        <script src="http://code.jquery.com/jquery.min.js"></script> <!-- @warning JQuery must be local -->
+        <script src="dahuapp.js"></script>
+        <script src="dahuapp.editor.js"></script>
     </head>
 
     <body>
@@ -25,17 +26,7 @@
             <a href="#" onclick="test()">click</a>
             some text
         </div>
-
-        <!-- Scripts -->
-        
-        <script src="http://code.jquery.com/jquery.min.js"></script>
-        <script src="bootstrap/js/bootstrap.min.js"></script>
-        <script src="dahuapp.engine.js"></script>
-        <script type="text/javascript">
-            $(function() {
-                dahuapp.engine.apply();
-            });
-        </script>
+        <!--
         <script type="text/javascript">
             window.log = function(message) {
                 document.getElementById("out").innerHTML += "</br>"+message;
@@ -70,5 +61,6 @@
                 log(dahuapp.drivers.dummy.onLoad());
             }
         </script>
+        -->
     </body>
 </html>
