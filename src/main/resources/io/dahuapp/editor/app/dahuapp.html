@@ -5,11 +5,15 @@
         <title>DahuApp</title>
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
         <script src="bootstrap/js/bootstrap.min.js"></script>
+        <script>
+            window.log = function(message) {
+                document.getElementById("out").innerHTML += "</br>"+message;
+            }
+        </script>
         <script src="http://code.jquery.com/jquery.min.js"></script> <!-- @warning JQuery must be local -->
         <script src="dahuapp.js"></script>
         <script src="dahuapp.editor.js"></script>
     </head>
-
     <body>
         <!-- Application -->
 
@@ -26,12 +30,7 @@
             <a href="#" onclick="test()">click</a>
             some text
         </div>
-        <!--
         <script type="text/javascript">
-            window.log = function(message) {
-                document.getElementById("out").innerHTML += "</br>"+message;
-            }
-            
             logObj = function(o) {
                 var str='';
                 for(var p in o){
@@ -53,14 +52,8 @@
                 }    
                         
                 // say and print hello
-                log(dahuapp.sayHello("bob"));
-                dahuapp.printHello("bob");
-                
-                // access dummy driver
-                log(dahuapp.name);
                 log(dahuapp.drivers.dummy.onLoad());
             }
         </script>
-        -->
     </body>
 </html>

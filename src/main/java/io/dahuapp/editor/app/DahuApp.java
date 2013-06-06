@@ -66,11 +66,11 @@ public class DahuApp extends Application {
             public void changed(final ObservableValue<? extends Worker.State> observableValue, final State oldState, final State newState) {
                 if (newState == State.SUCCEEDED) {
                     // load drivers
-                    JSObject dahuapp = (JSObject) webview.getEngine().executeScript("dahuapp");
-                    dahuapp.setMember("drivers", new DahuAppDriverProxy(webview.getEngine()));
+                    JSObject window = (JSObject) webview.getEngine().executeScript("window");
+                    window.setMember("dahuapp.drivers", new DahuAppDriverProxy(webview.getEngine()));
                     
                     // init engine
-                    webview.getEngine().executeScript("dahuapp.editor.init();");
+                    //webview.getEngine().executeScript("dahuapp.editor.init();");
                 }
             }
         });

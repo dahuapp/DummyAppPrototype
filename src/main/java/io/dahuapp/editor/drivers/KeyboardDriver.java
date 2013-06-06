@@ -26,6 +26,10 @@ public class KeyboardDriver implements Driver {
     private WebEngine webEngine;
     private ArrayList<String> callbacks = new ArrayList<>();
     
+    /*
+     * @warning in the new architecture driver should not be aware of
+     * webengine! driver must have proxy!!!
+     */
     public KeyboardDriver(WebEngine webEngine) {
         this.webEngine = webEngine;
     }
@@ -75,10 +79,14 @@ public class KeyboardDriver implements Driver {
                                 @Override
                                 public void run() {
                                     // F8 will throw a ClassCast exception
+                                    /*
                                     JSObject window = (JSObject)webEngine.executeScript("window");
                                     JSObject dahuapp = (JSObject)window.getMember("dahuapp");
-                                    JSObject engine = (JSObject)window.getMember("engine");
-                                    engine.call(callback, "capture");
+                                    JSObject engine = (JSObject)window.getMember("engine");*
+                                    */
+                                    System.out.println("F8 is pressed");
+                                    JSObject window = (JSObject) webEngine.executeScript("window");
+                                    window.call(callback, "capture");
                                 }
                             });
                         }
@@ -91,9 +99,8 @@ public class KeyboardDriver implements Driver {
                                 public void run() {
                                     // escape will throw an exception of ClassCast but due to
                                     // the fact it's undefined (see console println)
-                                    System.out.print("window.dahuapp.engine = ");
-                                    System.out.println(webEngine.executeScript("window.dahuapp.engine"));
-                                    JSObject window = (JSObject)webEngine.executeScript("window.dahuapp.engine");
+                                    System.out.println("ESC is pressed");
+                                    JSObject window = (JSObject)webEngine.executeScript("window");
                                     window.call(callback, "escape");
                                 }
                             });

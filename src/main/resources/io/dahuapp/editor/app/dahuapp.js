@@ -1,17 +1,24 @@
-var dahuapp = dahuapp || new (function($) {
+(function(window, $){
+    var dahuapp  = (function () {
+        var self = {};
+        
+        /* private API */
+        var _privateAttribute = ':o';
     
-    /* private API */
-    var _privateAttribute = ':o';
+        function _somePrivateFunction(args) {
+            return "private hello "+args;
+        };
+        
+        /* public API */
+
+        self.version = "0.0.1";
     
-    function _somePrivateFunction(args) {
-        return "private hello "+args;
-    };
-    
-    /* public API */
-    this.version = "0.0.1";
-    
-    this.somePublicFunction = function somePublicFunction(args) {
-        return "public hello "+args;
-    };
-    
-})(Jquery);
+        self.somePublicFunction = function somePublicFunction(args) {
+            return "public hello "+args;
+        }; 
+
+        return self;
+    }());
+
+    window.dahuapp = dahuapp;
+})(window, JQuery);
