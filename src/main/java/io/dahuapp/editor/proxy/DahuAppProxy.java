@@ -1,6 +1,7 @@
-package io.dahuapp.editor.app.proxy;
+package io.dahuapp.editor.proxy;
 
 import javafx.application.Platform;
+import javafx.scene.web.WebEngine;
 
 /**
  *
@@ -10,8 +11,8 @@ public class DahuAppProxy implements Proxy {
     
     public DahuAppDriverProxy drivers;
     
-    public DahuAppProxy() {
-        drivers = new DahuAppDriverProxy();
+    public DahuAppProxy(WebEngine webEngine) {
+        drivers = new DahuAppDriverProxy(webEngine);
     }
     
     @Override

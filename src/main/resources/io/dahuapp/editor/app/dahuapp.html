@@ -30,9 +30,14 @@
         
         <script src="http://code.jquery.com/jquery.min.js"></script>
         <script src="bootstrap/js/bootstrap.min.js"></script>
-        <script src="dahuapp.js"></script>
+        <script src="dahuapp.engine.js"></script>
         <script type="text/javascript">
-            log = function(message) {
+            $(function() {
+                dahuapp.engine.apply();
+            });
+        </script>
+        <script type="text/javascript">
+            window.log = function(message) {
                 document.getElementById("out").innerHTML += "</br>"+message;
             }
             

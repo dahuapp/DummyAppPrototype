@@ -12,7 +12,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
 import javafx.concurrent.Worker.State;
 
-import io.dahuapp.editor.app.proxy.DahuAppProxy;
+import io.dahuapp.editor.proxy.DahuAppProxy;
 
 public class DahuApp extends Application {
 
@@ -27,7 +27,7 @@ public class DahuApp extends Application {
         
         // pin it to stackpane
         root.getChildren().add(webview);
-
+        
         // create the sceen
         Scene scene = new Scene(root, 300, 250);
 
@@ -66,7 +66,7 @@ public class DahuApp extends Application {
             public void changed(final ObservableValue<? extends Worker.State> observableValue, final State oldState, final State newState) {
                 if (newState == State.SUCCEEDED) {
                     JSObject win = (JSObject) webview.getEngine().executeScript("window");
-                    win.setMember("dahuapp", new DahuAppProxy());
+                    win.setMember("dahuapp", new DahuAppProxy(webview.getEngine()));
                 }
             }
         });

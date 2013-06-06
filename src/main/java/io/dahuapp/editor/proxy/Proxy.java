@@ -1,4 +1,4 @@
-package io.dahuapp.editor.app.proxy;
+package io.dahuapp.editor.proxy;
 
 /**
  *

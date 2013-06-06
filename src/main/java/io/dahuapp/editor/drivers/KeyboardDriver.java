@@ -74,11 +74,11 @@ public class KeyboardDriver implements Driver {
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
-                                    // the two next lines may be dirty
-                                    // (the way 'dahuapp.engine' is called is
-                                    // not very generic)
-                                    JSObject window = (JSObject)webEngine.executeScript("dahuapp.engine");
-                                    window.call(callback, "capture");
+                                    // F8 will throw a ClassCast exception
+                                    JSObject window = (JSObject)webEngine.executeScript("window");
+                                    JSObject dahuapp = (JSObject)window.getMember("dahuapp");
+                                    JSObject engine = (JSObject)window.getMember("engine");
+                                    engine.call(callback, "capture");
                                 }
                             });
                         }
@@ -89,13 +89,12 @@ public class KeyboardDriver implements Driver {
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
-                                    JSObject window = (JSObject)webEngine.executeScript("window");
-                                    // demander a remi demain :
-                                    // comment on fait pour acceder a 'window.dahuapp.engine'
-                                    // parce que 'window.dahuapp' est un DahuAppProxy et que
-                                    // du coup on peut pas acceder a l'engine
-                                    System.out.println(window);
-                                    JSObject dahuapp = (JSObject)window.getMember("dahuapp");
+                                    // escape will throw an exception of ClassCast but due to
+                                    // the fact it's undefined (see console println)
+                                    System.out.print("window.dahuapp.engine = ");
+                                    System.out.println(webEngine.executeScript("window.dahuapp.engine"));
+                                    JSObject window = (JSObject)webEngine.executeScript("window.dahuapp.engine");
+                                    window.call(callback, "escape");
                                 }
                             });
                         }
