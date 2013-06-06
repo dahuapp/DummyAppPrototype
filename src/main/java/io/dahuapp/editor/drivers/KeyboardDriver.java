@@ -35,7 +35,9 @@ public class KeyboardDriver implements Driver {
     }
     
     public void addKeyCallback(JSObject listener) throws JSException {
+        System.out.println(listener);
         final String functionName = listener.getMember("name").toString();
+        System.out.println(functionName);
         switch (functionName) {
             case "undefined":
                 throw new JSException("Callback function cannot be anonymous.");
@@ -78,15 +80,9 @@ public class KeyboardDriver implements Driver {
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
-                                    // F8 will throw a ClassCast exception
-                                    /*
-                                    JSObject window = (JSObject)webEngine.executeScript("window");
-                                    JSObject dahuapp = (JSObject)window.getMember("dahuapp");
-                                    JSObject engine = (JSObject)window.getMember("engine");*
-                                    */
+                                    JSObject editor = (JSObject)webEngine.executeScript("window.dahuapp.editor");
                                     System.out.println("F8 is pressed");
-                                    JSObject window = (JSObject) webEngine.executeScript("window");
-                                    window.call(callback, "capture");
+                                    editor.call(callback, "capture");
                                 }
                             });
                         }
@@ -100,8 +96,8 @@ public class KeyboardDriver implements Driver {
                                     // escape will throw an exception of ClassCast but due to
                                     // the fact it's undefined (see console println)
                                     System.out.println("ESC is pressed");
-                                    JSObject window = (JSObject)webEngine.executeScript("window");
-                                    window.call(callback, "escape");
+                                    JSObject editor = (JSObject)webEngine.executeScript("window.dahuapp.editor");
+                                    editor.call(callback, "escape");
                                 }
                             });
                         }

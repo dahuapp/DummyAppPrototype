@@ -1,3 +1,12 @@
+"use strict";
+
+/**
+ * Dahuapp core module.
+ * 
+ * @param   window      window javascript object.
+ * @param   $           jQuery
+ * @returns dahuapp core module.
+ */
 (function(window, $){
     var dahuapp  = (function () {
         var self = {};

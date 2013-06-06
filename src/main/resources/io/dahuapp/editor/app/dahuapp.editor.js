@@ -1,10 +1,12 @@
-/*
- * Engine declaration (creates the engine if 'dahuapp.engine' doesn't
- * exists, if it does, it simply does nothing).
+"use strict";
+
+/**
+ * Dahuapp editor module.
+ * 
+ * @param   dahuapp     dahuapp object to augment with module.
+ * @param   $           jQuery
+ * @returns dahuapp extended with editor module.
  */
-
-log("start editor");
-
 var dahuapp = (function(dahuapp, $) { 
     var editor = (function () {
         var self = {};
@@ -33,19 +35,14 @@ var dahuapp = (function(dahuapp, $) {
          * @param String type Type of the event.
          */
         function handleCaptureModeEvent(type) {
-            $('body').append('bonjour');
             switch (type.toLowerCase()) {
                 case "capture":
-                    //dahuapp.drivers.screen.takeScreen();
+                    dahuapp.drivers.screen.takeScreen();
                     break;
                 case "escape":
-                    //dahuapp.engine.exitCaptureMode();
+                    dahuapp.editor.exitCaptureMode();
                     break;
             }
-        };
-
-        function dummy() {
-            $('body').append('bonjour');
         };
 
         /* public API */
@@ -67,15 +64,15 @@ var dahuapp = (function(dahuapp, $) {
              * englobant object.
              */
             var self = this;
-
+            
             $('#capture-mode').click(function() {
                 // shortcut
                 var driver = dahuapp.drivers.keyboard;
                 // if we're in capture mode, we exit it, otherwise we enter it
                 if (!self.captureMode) {
-                    driver.addKeyCallback(window.dahuapp.editor.handleCaptureModeEvent);
+                    driver.addKeyCallback(handleCaptureModeEvent);
                 } else {
-                    driver.removeKeyCallback(window.dahuapp.editor.handleCaptureModeEvent);
+                    driver.removeKeyCallback(handleCaptureModeEvent);
                 }
                 // the capture mode button gets a different style
                 $('#capture-mode').toggleClass('btn-primary', 'btn-success');
@@ -83,6 +80,11 @@ var dahuapp = (function(dahuapp, $) {
             });
         };
         
+        /**
+         * 
+         * @param {type} args
+         * @returns {String}
+         */
         self.somePublicFunction = function somePublicFunction(args) {
             return "public (editor) hello "+args;
         }; 
@@ -94,5 +96,3 @@ var dahuapp = (function(dahuapp, $) {
 
     return dahuapp;
 })(dahuapp || {}, jQuery);
-
-log("stop editor");
