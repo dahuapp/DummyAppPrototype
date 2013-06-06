@@ -1,46 +1,33 @@
-/***********************
- * Dahu App script
- ***********************/
-jQuery(function($) {
+"use strict";
 
-    /*
-     * In every button callback, this boolean must be checked
-     * to see if the action has to be performed or not.
-     * @type Boolean
-     */
-    var captureMode = false;
+/**
+ * Dahuapp core module.
+ * 
+ * @param   window      window javascript object.
+ * @param   $           jQuery
+ * @returns dahuapp core module.
+ */
+(function(window, $){
+    var dahuapp  = (function () {
+        var self = {};
+        
+        /* private API */
+        var _privateAttribute = ':o';
     
-    /************************
-     * Notifiers for keyboard drivers
-     * 
-     * Put all the notifiers in the same 'notify'
-     ************************/
-    
-    var captureNotify = {
-        "notifyCapture" : function(type) {
-            dahuapp.drivers.dummy.onLoad();
-            // === for strict comparison
-            if (type === "capture") {
-                dahuapp.drivers.fileSystem.writeImage(
-                        dahuapp.drivers.screen.takeScreen(),
-                        ".");
-            } else if (type === "escape") {
-                captureMode = false;
-                dahuapp.drivers.keyboard.removeKeyListener();
-            }
-        }
-    };
+        function _somePrivateFunction(args) {
+            return "private hello "+args;
+        };
+        
+        /* public API */
 
-    /************************
-     * Set actions to buttons
-     ************************/
+        self.version = "0.0.1";
     
-    $('#capture-mode').click(function() {
-        if (!captureMode) {
-            captureMode = true;
-            dahuapp.drivers.keyboard.addKeyListener(captureNotify);
-        } else {
-            captureMode = false;
-        }
-     });
-});
+        self.somePublicFunction = function somePublicFunction(args) {
+            return "public hello "+args;
+        }; 
+
+        return self;
+    })();
+
+    window.dahuapp = dahuapp;
+})(window, jQuery);
