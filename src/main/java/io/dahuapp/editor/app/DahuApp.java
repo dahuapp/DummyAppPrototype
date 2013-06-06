@@ -70,7 +70,7 @@ public class DahuApp extends Application {
                     window.setMember("dahuapp.drivers", new DahuAppDriverProxy(webview.getEngine()));
                     
                     // init engine
-                    //webview.getEngine().executeScript("dahuapp.editor.init();");
+                    webview.getEngine().executeScript("dahuapp.editor.init();");
                 }
             }
         });
