@@ -29,6 +29,10 @@ public class DummyDriver implements Driver {
         System.out.println("Hello, I'm dummy");
     }
     
+    public String getHello(String s) {
+        return "Hello, I'm dummy";
+    }
+    
     public void print(String s) {
         System.out.println(s);
     }

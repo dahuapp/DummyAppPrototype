@@ -3,8 +3,14 @@
  * exists, if it does, it simply does nothing).
  */
 
+log("start editor");
+
 var dahuapp = (function(dahuapp, $) { 
-    dahuapp.editor = function() {
+    var editor = (function () {
+        var self = {};
+        
+        /* private API */
+        
         /*
          * Tells if the app is in the capture mode (in theory, no actions are
          * available in this mode, other than clicking on the capture mode
@@ -42,6 +48,8 @@ var dahuapp = (function(dahuapp, $) {
             $('body').append('bonjour');
         };
 
+        /* public API */
+        
         /*
          * Main function : by calling this function, we bind the
          * html components of the application with their behaviour.
@@ -52,7 +60,7 @@ var dahuapp = (function(dahuapp, $) {
          * because it uses the properties and methods of this so it has
          * to be defined before using it.
          */
-        this.init = function init() {
+        self.init = function init() {
             /*
              * We must remember who 'this' is, because in a jQuery statement
              * the 'this' refers to the jQuery returns and not to the
@@ -74,7 +82,17 @@ var dahuapp = (function(dahuapp, $) {
                 self.captureMode = !self.captureMode;
             });
         };
-    };
+        
+        self.somePublicFunction = function somePublicFunction(args) {
+            return "public (editor) hello "+args;
+        }; 
+        
+        return self;
+    })();
+    
+    dahuapp.editor = editor;
 
     return dahuapp;
 })(dahuapp || {}, jQuery);
+
+log("stop editor");
