@@ -17,10 +17,15 @@ public class FileSystemDriver implements Driver {
 
     private File file;
     private DirectoryChooser directoryChooser = new DirectoryChooser();
-
+    private FilenameFilter pngFilter = new FilenameFilter() {
+        @Override
+        public boolean accept(File dir, String name) {
+            return name.matches(".*\\.png$");
+        }
+    }; 
     /**
      * @param name Name of the directory.
-     * @return true True if the directory is created.
+     * @return True if the directory is created.
      */
     public boolean createDir(String name) {
         File dir = new File(name);
@@ -32,14 +37,16 @@ public class FileSystemDriver implements Driver {
      * 
      * @param filename The name of the file and its pathname.
      * @param text The text to write in the file.
+     * @return True if the file was created.
      */
-    public void createFile(String fileName, String text) {
+    public boolean createFile(String fileName, String text) {
         try {
             FileWriter fw = new FileWriter(fileName, true);
             fw.write(text);
             fw.close();
+            return true;
         } catch (IOException e) {
-            System.out.println("Erreur de création de fichier : " + e);
+            return false;
         }
     }
 
@@ -92,16 +99,10 @@ public class FileSystemDriver implements Driver {
     public String[] getFiles(String projectDir) {
         try {
             File dirFile = new File(projectDir);
+            int nbFiles = dirFile.listFiles(pngFilter).length ;
+            String [] listFiles = new String[nbFiles];
+            for(int i = 0 ; i < nbFiles ; i++) {
 
-            FilenameFilter png = new FilenameFilter() {
-                @Override
-                public boolean accept(File dir, String name) {
-                    return name.matches(".*\\.png$");
-                }
-            };
-            int nbFiles = dirFile.listFiles(png).length;
-            String[] listFiles = new String[nbFiles];
-            for (int i = 0; i < nbFiles; i++) {
                 listFiles[i] = dirFile.listFiles()[i].getPath();
             }
             return listFiles;

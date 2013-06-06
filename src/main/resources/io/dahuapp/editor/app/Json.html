@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <script>
+            var screenTable = Array();
+            var tableIndex = 2;
+            var tab = "   "; //3 spaces
+            var truc = Array();
+
+            for (var j = 0; j < 2; j++) {
+                for (var i = 0; i < 2; i++) {
+                    var truc2truc = {
+                        "type": "mouse",
+                        "mouseX": 3 + i,
+                        "mouseY": 3 + i
+                    };
+                    truc[i] = truc2truc;
+                }
+
+                var screen = {
+                    "img": "/usr/machin/picture" + j,
+                    "actionIndex": 2,
+                    "action": truc
+                };
+                screenTable[j] = screen;
+            }
+            jsonModulDriver();
+
+            /**
+             * After the capture of all screenshots, the json is generating with this method.
+             * 
+             * @return Json Return the json which has been generated.
+             */
+            function jsonModulDriver() {
+                var Json;
+                Json = "{\n";
+                Json = insertPresentation(Json);
+                Json = Json + ",\n";
+                Json = insertAnnotation(Json);
+                Json = Json + "\n}";
+
+                alert(Json);
+                return Json;
+            }
+            
+            /**
+             * Insert all slides of the presentation.
+             * 
+             * @param Json Json to complete.
+             * @return Json Json completed.
+             */
+            function insertPresentation(Json) {
+
+                var img;
+                Json = Json + tab + "\"Slides\": [\n";
+                if (tableIndex >= 0) {
+                    Json = addSlide(Json, 0);
+                }
+
+                for (var i = 1; i < tableIndex; i++) {
+                    Json = Json + ",\n";
+                    Json = addSlide(Json, i);
+                }
+                Json = Json + "\n" + tab + "]";
+                return Json;
+            }
+
+            /**
+             * Insert Annotation for the presentation.
+             * 
+             * @param Json Json to complete.
+             * @return Json Json completed.
+             */
+            function insertAnnotation(Json) {
+                var annotation = "This is a note";
+
+                //getAnnotation(annotation);//not implemented yet
+                Json = Json + tab + "\"Annotation\": \"" + annotation + "\"";
+                return Json;
+            }
+
+            /**
+             * Insert one slide with all parameters
+             * 
+             * @param Json Json to complete.
+             * @param currentTableIndex Indicate the slide number.
+             * @return Json Json completed.
+             */
+            function addSlide(Json, currentTableIndex) {
+                var mouseX;
+                var mouseY;
+                Json = Json + tab + tab + "{\n" +
+                        tab + tab + tab + "\"img\": \"" + screenTable[currentTableIndex].img + "\",\n" +
+                        tab + tab + tab + "\"Actions\": [\n";
+                for (var i = 0; i < screenTable[currentTableIndex].actionIndex; i++) {
+                    switch (screenTable[currentTableIndex].action[i].type) {
+                        case "mouse" :
+                            Json = addMouse(Json, screenTable[currentTableIndex].action[i].mouseX, screenTable[currentTableIndex].action[i].mouseY);
+                            break;
+                        case others :
+                            System.out.println("Not Implemented yet");
+                    }
+                    if (i < screenTable[currentTableIndex].actionIndex - 1) {
+                        Json = Json + ",\n";
+                    }
+                    else
+                        Json = Json + "\n";
+                }
+
+                Json = Json + tab + tab + tab + "]\n" +
+                        tab + tab + "}";
+                return Json;
+            }
+            
+            /**
+             * Insert a mouse action.
+             * 
+             * @param Json Json to complete.
+             * @param mouseX The abscissa of the mouse pointer.
+             * @param mouseY The ordinate of the mouse pointer.
+             * @return Json Json completed.
+             */
+            function addMouse(Json, mouseX, mouseY) {
+
+                Json = Json + tab + tab + tab + tab + "{\n" +
+                        tab + tab + tab + tab + tab + "\"Type\": \"Mouse\",\n" +
+                        tab + tab + tab + tab + tab + "\"X\": " + mouseX + ",\n" +
+                        tab + tab + tab + tab + tab + "\"Y\": " + mouseY + "\n" +
+                        tab + tab + tab + tab + "}";
+                return Json;
+            }
+        </script>
+    </body>
+</html>
