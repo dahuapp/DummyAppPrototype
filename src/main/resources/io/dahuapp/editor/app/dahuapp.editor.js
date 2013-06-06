@@ -77,4 +77,4 @@ var dahuapp = (function(dahuapp, $) {
     };
 
     return dahuapp;
-})(dashboard || {}, JQuery);
+})(dahuapp || {}, jQuery);

@@ -11,12 +11,9 @@
             }
         </script>
         <script src="http://code.jquery.com/jquery.min.js"></script> <!-- @warning JQuery must be local -->
-        <script src="dahuapp.js"></script>
-        <script src="dahuapp.editor.js"></script>
     </head>
     <body>
         <!-- Application -->
-
         <header>
             <button type="button" id="set-project-dir" class="btn btn-primary">
                 Répertoire du projet
@@ -41,7 +38,7 @@
                     }
                 }
 
-                return str;
+                log(str);
             }
             
             test = function() {
@@ -52,8 +49,12 @@
                 }    
                         
                 // say and print hello
-                log(dahuapp.drivers.dummy.onLoad());
+                log(dahuapp);
+                log(dahuapp.somePublicFunction("martine"));
+                dahuapp.drivers.dummy.printHello("hello!!!!!!!!");
             }
         </script>
+        <script src="dahuapp.js"></script>
+        <script src="dahuapp.editor.js"></script>
     </body>
 </html>

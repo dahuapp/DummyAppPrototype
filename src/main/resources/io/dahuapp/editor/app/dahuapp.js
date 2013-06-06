@@ -1,3 +1,5 @@
+log("start dahuapp.js");
+
 (function(window, $){
     var dahuapp  = (function () {
         var self = {};
@@ -18,7 +20,10 @@
         }; 
 
         return self;
-    }());
+    });
 
+    window.log("init");
     window.dahuapp = dahuapp;
-})(window, JQuery);
+})(window, jQuery);
+
+log("end dahuapp.js");
